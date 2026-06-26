@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <title>BLR → SIN → HKG · Family Trip Packer</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
@@ -10,6 +12,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+    color-scheme: light only;
     --bg: #F7F7F5;
     --surface: #FFFFFF;
     --border: #E4E4DF;
@@ -25,13 +28,40 @@
     --shadow: 0 1px 4px rgba(0,0,0,0.07);
   }
 
+  html {
+    background: #F7F7F5;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background: #F7F7F5;
+    color: #1A1A18;
     min-height: 100vh;
     padding: 0 0 80px;
   }
+  /* Force readable colors even if the in-app browser tries to invert for dark mode */
+  html, body { background-color: #F7F7F5 !important; color: #1A1A18 !important; }
+  .tab-panel { background-color: #F7F7F5 !important; }
+  .tab-panel.active { display: block !important; background-color: #F7F7F5 !important; }
+  .section-card { background-color: #FFFFFF !important; border: 1px solid #E4E4DF !important; }
+  .section-header { background-color: #FFFFFF !important; }
+  .section-body { background-color: #FFFFFF !important; }
+  .section-body.open { display: block !important; background-color: #FFFFFF !important; }
+  main { background-color: #F7F7F5 !important; }
+  nav, header { background-color: #FFFFFF !important; }
+  * { box-sizing: border-box; }
+  .qty-label, .item-text, .section-title, .section-icon, .day-weekday,
+  .td-date, .idea-name, .tl-city, .at-route, .wx-temp,
+  .qty-value, .check-item, .idea-desc, p, li, td, th, label, div, span
+  { color: #1A1A18 !important; }
+  .muted, .qty-note, .item-sub, .idea-desc, .wx-cond, .td-weekday,
+  .section-count, .plan-empty, .at-detail, .tl-detail
+  { color: #8A8A82 !important; }
+  .section-title, .section-toggle { color: #1A1A18 !important; }
+  nav button { color: #8A8A82 !important; background: #FFFFFF !important; }
+  nav button.active { color: #2D6A4F !important; }
+  .check-item, .idea-item, .qty-item, .at-row, .pre-task-item
+  { background-color: #FFFFFF !important; }
 
   /* HEADER */
   header {
@@ -657,7 +687,7 @@
   .td-travel-note { font-size: 9px; color: var(--accent); font-weight: 500; margin-top: 3px; line-height: 1.2; }
 </style>
 </head>
-<body>
+<body style="background:#F7F7F5;color:#1A1A18;">
 
 <header>
   <div class="trip-line">BLR <span>→ SIN → HKG</span></div>
@@ -669,15 +699,15 @@
 </header>
 
 <nav>
-  <button class="active" onclick="switchTab('overview')">Overview</button>
-  <button onclick="switchTab('days')">📅 Days</button>
-  <button onclick="switchTab('ideas')">🗺 Things to Do</button>
-  <button onclick="switchTab('handcarry')">🎒 Hand Carry</button>
-  <button onclick="switchTab('baby')">👶 Baby</button>
-  <button onclick="switchTab('mama')">🧕 Mama</button>
-  <button onclick="switchTab('baba')">👔 Baba</button>
-  <button onclick="switchTab('meds')">💊 Medicines</button>
-  <button onclick="switchTab('pretavel')">✅ Before You Go</button>
+  <button class="active" onclick="switchTab('overview', this)">Overview</button>
+  <button onclick="switchTab('days', this)">📅 Days</button>
+  <button onclick="switchTab('ideas', this)">🗺 Things to Do</button>
+  <button onclick="switchTab('handcarry', this)">🎒 Hand Carry</button>
+  <button onclick="switchTab('baby', this)">👶 Baby</button>
+  <button onclick="switchTab('mama', this)">🧕 Mama</button>
+  <button onclick="switchTab('baba', this)">👔 Baba</button>
+  <button onclick="switchTab('meds', this)">💊 Medicines</button>
+  <button onclick="switchTab('pretavel', this)">✅ Before You Go</button>
 </nav>
 
 <main>
@@ -861,7 +891,7 @@
 
     <div id="days-list"></div>
 
-    <div class="at-note" style="border-radius:10px;margin-top:4px;border:1px solid var(--border);">🌦 <strong>Weather is a projection</strong> from AccuWeather's daily outlook for your exact dates (highs–lows in °C). Useful for packing, but tropical forecasts shift fast — re-check a live forecast 2–3 days before each leg. Expect short, intense showers most days rather than all-day rain. ⚠️ Watch for typhoon advisories in Hong Kong (hko.gov.hk).
+    <div class="at-note" style="border-radius:10px;margin-top:4px;border:1px solid var(--border);">🌦 <strong>Weather is a projection</strong> from AccuWeather's daily outlook for your exact dates (highs–lows in °C). Useful for packing, but tropical forecasts shift fast — re-check a live forecast 2–3 days before each leg. Expect short, intense showers most days rather than all-day rain. ⚠️ Watch for typhoon advisories in Hong Kong (hko.gov.hk).</div>
 
   </div>
 
@@ -934,7 +964,7 @@
         <div class="section-title"><span class="section-icon">👜</span> Grown-up Cabin Essentials <span class="section-count" id="cnt-hc-adult">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-hc-adult">
+      <div class="section-body open" id="body-hc-adult">
         <div id="list-hc-adult"></div>
         <div class="add-row">
           <input type="text" id="inp-hc-adult" placeholder="Add an item…">
@@ -1085,7 +1115,7 @@
         <div class="section-title"><span class="section-icon">🎒</span> Baby Bag Essentials <span class="section-count" id="cnt-baby-essentials">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-baby-essentials">
+      <div class="section-body open" id="body-baby-essentials" >
         <div id="list-baby-essentials"></div>
         <div class="add-row">
           <input type="text" id="inp-baby-essentials" placeholder="Add an item…">
@@ -1100,7 +1130,7 @@
         <div class="section-title"><span class="section-icon">🥣</span> Food & Feeding <span class="section-count" id="cnt-baby-food">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-baby-food">
+      <div class="section-body open" id="body-baby-food">
         <div id="list-baby-food"></div>
         <div class="add-row">
           <input type="text" id="inp-baby-food" placeholder="Add an item…">
@@ -1200,7 +1230,7 @@
         <div class="section-title"><span class="section-icon">💄</span> Mama's Toiletries & Personal <span class="section-count" id="cnt-mama-toiletries">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-mama-toiletries">
+      <div class="section-body open" id="body-mama-toiletries">
         <div id="list-mama-toiletries"></div>
         <div class="add-row">
           <input type="text" id="inp-mama-toiletries" placeholder="Add an item…">
@@ -1291,7 +1321,7 @@
         <div class="section-title"><span class="section-icon">🧴</span> Baba's Toiletries <span class="section-count" id="cnt-baba-toiletries">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-baba-toiletries">
+      <div class="section-body open" id="body-baba-toiletries">
         <div id="list-baba-toiletries"></div>
         <div class="add-row">
           <input type="text" id="inp-baba-toiletries" placeholder="Add an item…">
@@ -1338,7 +1368,7 @@
         <div class="section-title"><span class="section-icon">🩹</span> First Aid <span class="section-count" id="cnt-meds-firstaid">0 / 0</span></div>
         <span class="section-toggle">▼</span>
       </div>
-      <div class="section-body" id="body-meds-firstaid">
+      <div class="section-body open" id="body-meds-firstaid">
         <div id="list-meds-firstaid"></div>
         <div class="add-row">
           <input type="text" id="inp-meds-firstaid" placeholder="Add item…">
@@ -1701,17 +1731,19 @@ function quickAssign(region, ideaId) {
 
 // ─── INIT ─────────────────────────────────────────────────
 function init() {
-  Object.entries(checklistData).forEach(([listId, items]) => {
-    items.forEach((item, i) => {
-      const key = `${listId}-${i}`;
-      if (state.checks[key] === undefined) state.checks[key] = false;
+  try {
+    Object.entries(checklistData).forEach(([listId, items]) => {
+      items.forEach((item, i) => {
+        const key = `${listId}-${i}`;
+        if (state.checks[key] === undefined) state.checks[key] = false;
+      });
+      renderList(listId);
     });
-    renderList(listId);
-  });
-  updateAllCounts();
-  updateGlobalProgress();
-  renderDays();
-  renderIdeas();
+  } catch (e) { console.error('checklist render error', e); }
+  try { updateAllCounts(); } catch (e) { console.error(e); }
+  try { updateGlobalProgress(); } catch (e) { console.error(e); }
+  try { renderDays(); } catch (e) { console.error('renderDays error', e); }
+  try { renderIdeas(); } catch (e) { console.error('renderIdeas error', e); }
 }
 
 function renderList(listId) {
@@ -1815,11 +1847,17 @@ function toggleSection(header) {
 
 // ─── NOTES PERSIST ────────────────────────────────────────
 const notesEl = document.getElementById('tripNotes');
-notesEl.value = localStorage.getItem('tripNotes') || '';
-notesEl.addEventListener('input', () => localStorage.setItem('tripNotes', notesEl.value));
+if (notesEl) {
+  notesEl.value = localStorage.getItem('tripNotes') || '';
+  notesEl.addEventListener('input', () => localStorage.setItem('tripNotes', notesEl.value));
+}
 
 // ─── RUN ──────────────────────────────────────────────────
-init();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 </body>
 </html>
